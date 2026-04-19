@@ -44,7 +44,7 @@ export default function ContactSection() {
               fontFamily: "Georgia, serif",
             }}
           >
-            Ready to Grow Your
+            Ready to <span class="keep-together">Grow Your</span>
             <br />
             Business in <span style={{ color: OLIVE }}>Qatar?</span>
           </h2>
