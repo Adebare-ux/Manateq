@@ -62,6 +62,7 @@ export default function ContactSection() {
           </p>
           <div style={{ display: "flex", gap: 16 }}>
             <RippleBtn
+              className="consultation-btn"
               style={{
                 background: PRIMARY,
                 color: "#fff",
@@ -78,6 +79,7 @@ export default function ContactSection() {
               Schedule a Consultation →
             </RippleBtn>
             <RippleBtn
+              className="brochure-btn"
               style={{
                 background: "transparent",
                 color: "#333",

@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-export function RippleBtn({ children, style, onClick }) {
+export function RippleBtn({ children, style, onClick, className }) {
   const ref = useRef();
 
   const click = (e) => {
@@ -25,7 +25,12 @@ export function RippleBtn({ children, style, onClick }) {
   };
 
   return (
-    <button ref={ref} className="ripple-wrap" style={style} onClick={click}>
+    <button
+      ref={ref}
+      className={`ripple-wrap ${className || ""}`}
+      style={style}
+      onClick={click}
+    >
       {children}
     </button>
   );

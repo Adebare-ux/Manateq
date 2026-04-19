@@ -128,24 +128,30 @@ export default function Hero() {
           >
             Explore Opportunities →
           </button>
-          <button
-            style={{
-              background: "transparent",
-              color: "#333",
-              border: "2px solid #ccc",
-              padding: "14px 28px",
-              borderRadius: 28,
-              cursor: "pointer",
-              fontSize: 15,
-              fontWeight: 600,
-              fontFamily: "Georgia, serif",
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-            }}
+          <a
+            href="https://portal.manateq.qa/en-US/Signin"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Apply Now ⬇
-          </button>
+            <button
+              style={{
+                background: "transparent",
+                color: "#333",
+                border: "2px solid #ccc",
+                padding: "14px 28px",
+                borderRadius: 28,
+                cursor: "pointer",
+                fontSize: 15,
+                fontWeight: 600,
+                fontFamily: "Georgia, serif",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              Apply Now ⬇
+            </button>
+          </a>
         </div>
       </div>
     </section>
