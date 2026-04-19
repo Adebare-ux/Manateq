@@ -5,6 +5,7 @@ export function CounterStat({ icon, end, suffix, label, active, delay }) {
   const n = useCounter(end, active);
   return (
     <div
+      className="stats-card"
       style={{
         textAlign: "center",
         opacity: active ? 1 : 0,
@@ -13,6 +14,7 @@ export function CounterStat({ icon, end, suffix, label, active, delay }) {
       }}
     >
       <div
+        className="stats-icon"
         style={{
           width: 56,
           height: 56,
@@ -28,6 +30,7 @@ export function CounterStat({ icon, end, suffix, label, active, delay }) {
         {icon}
       </div>
       <div
+        className="stats-value"
         style={{
           color: "#fff",
           fontSize: 36,
@@ -40,6 +43,7 @@ export function CounterStat({ icon, end, suffix, label, active, delay }) {
         {suffix}
       </div>
       <div
+        className="stats-label"
         style={{ color: "rgba(255,255,255,0.7)", fontSize: 13, marginTop: 6 }}
       >
         {label}

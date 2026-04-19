@@ -21,14 +21,13 @@ export default function StatsBar() {
         }}
       />
       <div
-        className="stats-grid"
         style={{
           position: "relative",
-          padding: "60px 80px",
           textAlign: "center",
         }}
       >
         <h2
+          className="stats-title"
           style={{
             color: "#fff",
             fontSize: 36,
@@ -42,6 +41,7 @@ export default function StatsBar() {
           Driving Economic Growth
         </h2>
         <p
+          className="stats-description"
           style={{
             color: "rgba(255,255,255,0.75)",
             fontSize: 15,
@@ -55,13 +55,7 @@ export default function StatsBar() {
         </p>
         <div
           ref={statsRef}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4,1fr)",
-            gap: 32,
-            maxWidth: 900,
-            margin: "0 auto",
-          }}
+          className="stats-cards"
         >
           {STATS_DATA.map((s, index) => (
             <CounterStat

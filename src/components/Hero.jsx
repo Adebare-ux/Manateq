@@ -56,7 +56,7 @@ export default function Hero() {
           Dedicating our time to serve you better
         </div>
         <h1
-          className="hero"
+          className="hero-heading"
           style={{
             fontSize: 64,
             fontWeight: 900,
@@ -96,7 +96,7 @@ export default function Hero() {
           </span>
         </h1>
         <p
-          className="hero"
+          className="hero-text"
           style={{
             fontSize: 17,
             color: "#444",
