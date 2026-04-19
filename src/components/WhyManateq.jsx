@@ -7,6 +7,7 @@ export default function WhyManateq() {
       style={{ background: LIGHT_PINK, padding: "80px" }}
     >
       <div
+        className="why-grid"
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
@@ -16,9 +17,7 @@ export default function WhyManateq() {
           margin: "0 auto",
         }}
       >
-        <div
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}
-        >
+        <div className="why-gallery" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
           {[
             "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=300&h=200&fit=crop",
             "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=300&h=200&fit=crop",

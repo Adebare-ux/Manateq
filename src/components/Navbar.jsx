@@ -81,22 +81,12 @@ export default function Navbar() {
         <div style={{ animation: "fadeUp 0.5s ease both" }}>
           <Logo />
         </div>
-        {isMobile && (
-          <button
-            className="navbar-mobile-toggle"
-            aria-expanded={menuOpen}
-            aria-label="Toggle navigation"
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            {menuOpen ? "✕" : "☰"}
-          </button>
-        )}
       </div>
 
       <div
         className="navbar-links"
         style={{
-          display: isMobile ? "none" : "flex",
+          display: "flex",
           alignItems: "center",
           gap: 32,
         }}
@@ -128,7 +118,7 @@ export default function Navbar() {
       <div
         className="navbar-actions"
         style={{
-          display: isMobile ? "none" : "flex",
+          display: "flex",
           gap: 12,
           animation: "fadeUp 0.5s ease 0.3s both",
         }}
@@ -173,7 +163,17 @@ export default function Navbar() {
           Get Started
         </RippleBtn>
       </div>
-      {menuOpen && isMobile && (
+
+      <button
+        className="navbar-mobile-toggle"
+        aria-expanded={menuOpen}
+        aria-label="Toggle navigation"
+        onClick={() => setMenuOpen((open) => !open)}
+      >
+        {menuOpen ? "✕" : "☰"}
+      </button>
+
+      {menuOpen && (
         <div className={`navbar-mobile-panel ${menuOpen ? "open" : ""}`}>
           {NAV_LINKS.map((link) => (
             <a key={link} href="#" className="navbar-mobile-link">
