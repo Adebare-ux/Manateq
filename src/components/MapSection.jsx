@@ -21,25 +21,29 @@ const ZONE_LABEL_POSITIONS = {
 
 export default function MapSection() {
   const [mapRef, isInView] = useInView({ threshold: 0.2 });
-  const SVG_WIDTH = 860;
-  const SVG_HEIGHT = 520;
-  const LABEL_PADDING = 6;
-  const LABEL_GAP = 4;
 
-  const baseZones = ZONES.map((z) => {
+  const processedZones = ZONES.map((z) => {
     const cx = (z.x / 100) * 780;
     const cy = (z.y / 100) * 480;
     const pos = ZONE_LABEL_POSITIONS[z.name] || { lx: cx + 14, ly: cy - 10 };
     const labelWidth = Math.max(62, Math.min(170, z.name.length * 5.8 + 14));
     const labelHeight = 18;
-    const labelX = Math.max(
-      LABEL_PADDING,
-      Math.min(pos.lx, SVG_WIDTH - labelWidth - LABEL_PADDING)
-    );
-    const labelY = Math.max(
-      LABEL_PADDING,
-      Math.min(pos.ly, SVG_HEIGHT - labelHeight - LABEL_PADDING)
-    );
+    const labelX = pos.lx;
+    const labelY = pos.ly;
+    const labelCenterX = labelX + labelWidth / 2;
+    const labelCenterY = labelY + labelHeight / 2;
+    const anchorX =
+      cx < labelX
+        ? labelX
+        : cx > labelX + labelWidth
+          ? labelX + labelWidth
+          : labelCenterX;
+    const anchorY =
+      cy < labelY
+        ? labelY
+        : cy > labelY + labelHeight
+          ? labelY + labelHeight
+          : labelCenterY;
 
     return {
       ...z,
@@ -49,60 +53,6 @@ export default function MapSection() {
       labelY,
       labelWidth,
       labelHeight,
-    };
-  });
-
-  const overlaps = (a, b) =>
-    a.labelX < b.labelX + b.labelWidth + LABEL_GAP &&
-    a.labelX + a.labelWidth + LABEL_GAP > b.labelX &&
-    a.labelY < b.labelY + b.labelHeight + LABEL_GAP &&
-    a.labelY + a.labelHeight + LABEL_GAP > b.labelY;
-
-  const placed = [];
-  const resolvedByName = {};
-
-  [...baseZones]
-    .sort((a, b) => a.labelY - b.labelY || a.labelX - b.labelX)
-    .forEach((zone) => {
-      const next = { ...zone };
-      let attempts = 0;
-
-      while (placed.some((p) => overlaps(next, p)) && attempts < 80) {
-        next.labelY += next.labelHeight + LABEL_GAP;
-        if (next.labelY > SVG_HEIGHT - next.labelHeight - LABEL_PADDING) {
-          next.labelY = LABEL_PADDING + (attempts % 3) * (next.labelHeight + LABEL_GAP);
-          next.labelX = Math.min(
-            next.labelX + 12,
-            SVG_WIDTH - next.labelWidth - LABEL_PADDING
-          );
-        }
-        attempts += 1;
-      }
-
-      placed.push(next);
-      resolvedByName[next.name] = next;
-    });
-
-  const processedZones = ZONES.map((z) => {
-    const r = resolvedByName[z.name];
-    const labelCenterX = r.labelX + r.labelWidth / 2;
-    const labelCenterY = r.labelY + r.labelHeight / 2;
-    const anchorX =
-      r.cx < r.labelX
-        ? r.labelX
-        : r.cx > r.labelX + r.labelWidth
-          ? r.labelX + r.labelWidth
-          : labelCenterX;
-    const anchorY =
-      r.cy < r.labelY
-        ? r.labelY
-        : r.cy > r.labelY + r.labelHeight
-          ? r.labelY + r.labelHeight
-          : labelCenterY;
-
-    return {
-      ...z,
-      ...r,
       anchorX,
       anchorY,
     };
@@ -132,14 +82,8 @@ export default function MapSection() {
         >
           Manateq at a glance
         </h2>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 64,
-            marginTop: 24,
-          }}
-        >
+
+        <div className="map-summary-stats">
           {[
             { val: "1000+", lbl: "Active Companies" },
             { val: "14M+", lbl: "sq.m Land Area" },
@@ -148,6 +92,7 @@ export default function MapSection() {
           ].map((s, index) => (
             <div
               key={s.lbl}
+              className="map-summary-stat"
               style={{
                 textAlign: "center",
                 animation: isInView
@@ -184,7 +129,7 @@ export default function MapSection() {
         }}
       >
         <svg
-          viewBox="0 0 860 520"
+          viewBox="0 0 860 560"
           preserveAspectRatio="xMidYMid meet"
           style={{
             display: "block",
@@ -266,29 +211,29 @@ export default function MapSection() {
           ))}
 
           <g
-            transform="translate(770,312)"
+            transform="translate(660,420)"
             style={{
-              animation: isInView ? "popIn 0.6s ease 1.2s both" : "none",
               opacity: isInView ? 1 : 0,
+              transition: "opacity 0.6s ease 1.2s",
             }}
           >
             <circle r="17" fill={PRIMARY} />
             <text x="0" y="4" textAnchor="middle" fill="#fff" fontSize="12.5" style={{ pointerEvents: "none" }}>
               ✈
             </text>
-            <line x1="0" y1="17" x2="0" y2="24" stroke={PRIMARY} strokeWidth="1" strokeOpacity="0.5" />
-            <rect x="-46" y="24" width="92" height="30" rx="8" fill="rgba(255,255,255,0.9)" />
-            <text x="0" y="35" textAnchor="middle" fill="#444" fontSize="8.8" fontWeight="700" style={{ pointerEvents: "none" }}>
+            <line x1="0" y1="17" x2="0" y2="26" stroke={PRIMARY} strokeWidth="1" strokeOpacity="0.5" />
+            <rect x="-46" y="26" width="92" height="36" rx="8" fill="rgba(255,255,255,0.9)" />
+            <text x="0" y="38" textAnchor="middle" fill="#444" fontSize="8.8" fontWeight="700" style={{ pointerEvents: "none" }}>
               <tspan x="0" dy="0">Hamad Intl.</tspan>
-              <tspan x="0" dy="11">Airport</tspan>
+              <tspan x="0" dy="14">Airport</tspan>
             </text>
           </g>
 
           <g
-            transform="translate(770,372)"
+            transform="translate(790,420)"
             style={{
-              animation: isInView ? "popIn 0.6s ease 1.4s both" : "none",
               opacity: isInView ? 1 : 0,
+              transition: "opacity 0.6s ease 1.4s",
             }}
           >
             <circle r="17" fill={PRIMARY} />
@@ -296,9 +241,10 @@ export default function MapSection() {
               ⚓
             </text>
             <line x1="0" y1="17" x2="0" y2="26" stroke={PRIMARY} strokeWidth="1" strokeOpacity="0.5" />
-            <rect x="-44" y="26" width="88" height="20" rx="9" fill="rgba(255,255,255,0.95)" />
-            <text x="0" y="40" textAnchor="middle" fill="#444" fontSize="9" fontWeight="700" style={{ pointerEvents: "none" }}>
-              Hamad Port
+            <rect x="-46" y="26" width="92" height="36" rx="8" fill="rgba(255,255,255,0.9)" />
+            <text x="0" y="38" textAnchor="middle" fill="#444" fontSize="8.8" fontWeight="700" style={{ pointerEvents: "none" }}>
+              <tspan x="0" dy="0">Hamad</tspan>
+              <tspan x="0" dy="14">Port</tspan>
             </text>
           </g>
         </svg>
