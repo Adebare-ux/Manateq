@@ -7,6 +7,7 @@ export function CounterStat({ icon, end, suffix, label, active, delay }) {
     <div
       className="stats-card"
       style={{
+        width: "100%",
         textAlign: "center",
         opacity: active ? 1 : 0,
         transform: active ? "translateY(0)" : "translateY(28px)",
