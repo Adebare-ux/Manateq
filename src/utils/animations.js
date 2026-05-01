@@ -37,10 +37,16 @@ export const GLOBAL_CSS = `
 `;
 
 export function injectCSS() {
-  if (!document.getElementById("mq-styles")) {
-    const s = document.createElement("style");
-    s.id = "mq-styles";
-    s.textContent = GLOBAL_CSS;
-    document.head.appendChild(s);
+  try {
+    if (typeof document === "undefined") return;
+
+    if (!document.getElementById("mq-styles")) {
+      const s = document.createElement("style");
+      s.id = "mq-styles";
+      s.textContent = GLOBAL_CSS || "";
+      document.head.appendChild(s);
+    }
+  } catch (err) {
+    console.error("CSS injection failed:", err);
   }
 }
